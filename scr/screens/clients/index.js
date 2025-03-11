@@ -8,6 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SplashScreen from "expo-splash-screen";
 
 import ClientItem from './components/ClientItem';
 import ActiveButton from '../../components/ActiveButton';
@@ -74,6 +75,8 @@ const getData = async () => {
 
 // clearStorage();
 
+SplashScreen.preventAutoHideAsync(); // Оставляем экран загрузки
+
 export default function Clients({ navigation, route }) {
   const [clients, setClients] = useState(defultClients);
   const [filterClients, setFilteredClients] = useState(clients);
@@ -115,6 +118,16 @@ export default function Clients({ navigation, route }) {
   const renderItem = ({ item }) => {
     return <ClientItem client={item} onPress={onPressClient} />;
   };
+ // Задержка загрузки приложения для просмотра экрана загрузки
+  useEffect(() => {
+    const loadApp = async () => {
+      // Симуляция загрузки данных
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await SplashScreen.hideAsync(); // Скрываем splash screen
+    };
+
+    loadApp();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,7 +143,7 @@ export default function Clients({ navigation, route }) {
       <FlatList
         data={filterClients}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        // keyExtractor={(item) => item.id}
       />
       <View style={styles.addNewButton}>
         <ActiveButton

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "clientnavigationtest",
+    "name": "Clients",
     "slug": "snack-adecb0b8-704b-40bd-a30a-5146c7cc7f58",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,9 +9,24 @@
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#ed9060"
     },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ed9060",
+          "image": "./assets/splash-icon.png",
+          "duration": 5000,
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 200
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -19,10 +34,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ksarados.snackadecb0b8704b40bda30a5146c7cc7f58"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f4b6820a-d554-49ed-b537-c6bd103da782"
+      }
+    },
+    "owner": "ksarados"
   }
 }
