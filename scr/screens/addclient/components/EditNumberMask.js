@@ -16,7 +16,7 @@ export default function EditNumberMask({
         placeholder={textPlaceholder}
         onChangeText={onChangeText}
         value={value}
-        mask={['+','7',' (',/\d/,/\d/,/\d/,') ',/\d/,/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
+        mask={['+','7',' ','(',/\d/,/\d/,/\d/,')',' ',/\d/,/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
         keyboardType='number-pad'
       />
     </View>

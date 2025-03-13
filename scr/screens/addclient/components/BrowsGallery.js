@@ -14,7 +14,7 @@ export default function BrowsGallery({value, onChangeText}) {
     });
 
     if (!result.canceled) {
-      onChangeText(result.assets[0].uri);
+      onChangeText({uri: result.assets[0].uri});
     }
   };
   console.log('photo ', value)
