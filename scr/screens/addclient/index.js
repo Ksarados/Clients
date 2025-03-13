@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,31 +14,42 @@ import EditNumberMask from './components/EditNumberMask';
 import BrowsGallery from './components/BrowsGallery';
 import CityPicker from './components/CityPicker';
 
-export default function AddClient({ navigation }) {
-  const [titlePhoto, setTitlePhoto] = useState('');
-  const [titleName, setTitleName] = useState('');
-  const [titleNumber, setTitleNumber] = useState('');
-  const [titleCity, setTitleCity] = useState('');
-  const [titleBio, setTitleBio] = useState('');
+// const SET_PHOTO = 'photo';
+// const SET_NAME = 'name';
+// const SET_NUMBER = 'number';
+// const SET_CITY = 'city';
+// const SET_BIO = 'bio';
 
-  // const [form, setForm] = useState({
-  //   titlePhoto: '',
-  //   titleName: '',
-  //   titleNumber: '',
-  //   titleCity: '',
-  //   titleBio: '',
-  // });
+const initialValue = {
+  photo: '',
+  name: '',
+  number: '',
+  city: '',
+  bio: '',
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'photo':
+      return {...state, photo: action.payload };
+    case 'name':
+      return {...state, name: action.payload };
+    case 'number':
+      return {...state, number: action.payload };
+    case 'city':
+      return {...state, city: action.payload };
+    case 'bio':
+      return {...state, bio: action.payload };
+    default:
+      return state;
+  }
+};
+
+export default function AddClient({ navigation }) {
+  const [clients, dispatch] = useReducer(reducer, initialValue);
 
   const addDatePerson = () => {
-    //if (!photo || !name || !number || !city || !bioText) return;
-    const client = {
-      photo: titlePhoto,
-      name: titleName,
-      number: titleNumber,
-      city: titleCity,
-      bio: titleBio,
-    };
-    navigation.navigate('Clients', { newClient: client });
+    navigation.navigate('Clients', { newClient: clients });
   };
 
   return (
@@ -53,30 +64,30 @@ export default function AddClient({ navigation }) {
       </View>
       <KeyboardAvoidingView style={styles.keyboardAvoiding}>
         <ScrollView style={styles.textEditView}>
-          <BrowsGallery value={titlePhoto} onChangeText={setTitlePhoto} />
+          <BrowsGallery value={clients.photo} onChangeText={(photoClient) => dispatch({type: 'photo', payload: photoClient})} />
           <TextEditPerson
             text="ФИО"
             textPlaceholder="Введите фамилию и имя"
-            value={titleName}
-            onChangeText={setTitleName}
+            value={clients.name}
+            onChangeText={(text) => dispatch({type: 'name', payload: text})}
           />
           <EditNumberMask
             text="Введите номар телефона"
             textPlaceholder="+7 (000) 000 00 00"
             keyboard='number-pad'
-            value={titleNumber}
-            onChangeText={setTitleNumber}
+            value={clients.number}
+            onChangeText={(num) => dispatch({type: 'number', payload: num})}
           />
           <CityPicker
             text="Выберите город"
-            value={titleCity}
-            onChangeText={setTitleCity}
+            value={clients.city}
+            onChangeText={(text) => dispatch({type: 'city', payload: text})}
           />
           <TextEditPerson
             text="Био"
             textPlaceholder="Укажите хобби, интересы, образование и стаж работы"
-            value={titleBio}
-            onChangeText={setTitleBio}
+            value={clients.bio}
+            onChangeText={(text) => dispatch({type: 'bio', payload: text})}
             bio
           />
         </ScrollView>
