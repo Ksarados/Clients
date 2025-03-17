@@ -7,6 +7,9 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { addClientAction } from '../../reducer/clientReducer';
 import NavigationButton from '../../components/NavigationButton';
 import ActiveButton from '../../components/ActiveButton';
 import TextEditPerson from './components/EditPerson';
@@ -14,42 +17,71 @@ import EditNumberMask from './components/EditNumberMask';
 import BrowsGallery from './components/BrowsGallery';
 import CityPicker from './components/CityPicker';
 
-// const SET_PHOTO = 'photo';
-// const SET_NAME = 'name';
-// const SET_NUMBER = 'number';
-// const SET_CITY = 'city';
-// const SET_BIO = 'bio';
+export const PHOTO_CHANGED = 'client/PHOTO_changed';
+export const NAME_CHANGED = 'client/name_changed';
+export const NUMBER_CHANGED = 'client/number_changed';
+export const CITY_CHANGED = 'client/city_changed';
+export const BIO_CHANGED = 'client/bio_changed';
 
 const initialValue = {
   photo: '',
   name: '',
-  number: '',
+  number: '7',
   city: '',
   bio: '',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'photo':
+    case PHOTO_CHANGED:
       return {...state, photo: action.payload };
-    case 'name':
+    case NAME_CHANGED:
       return {...state, name: action.payload };
-    case 'number':
+    case NUMBER_CHANGED:
       return {...state, number: action.payload };
-    case 'city':
+    case CITY_CHANGED:
       return {...state, city: action.payload };
-    case 'bio':
+    case BIO_CHANGED:
       return {...state, bio: action.payload };
     default:
       return state;
   }
 };
 
+const onChangePhoto = (photo) => {
+  return { type: PHOTO_CHANGED, payload: photo };
+};
+
+const onChangeName = (name) => {
+  return { type: NAME_CHANGED, payload: name };
+};
+
+const onChangeNumber = (number) => {
+  return { type: NUMBER_CHANGED, payload: number };
+};
+
+const onChangeCity = (city) => {
+  return { type: CITY_CHANGED, payload: city };
+};
+
+const onChangeBio = (bio) => {
+  return { type: BIO_CHANGED, payload: bio };
+};
+
 export default function AddClient({ navigation }) {
-  const [clients, dispatch] = useReducer(reducer, initialValue);
+
+  const [state, dispatch] = useReducer(reducer, initialValue);
+  // console.log('state in component', state);
+
+  const clients = useSelector((state) => state);
+  console.log('clients:', clients);
+
+  const reduxDispatch = useDispatch();
 
   const addDatePerson = () => {
-    navigation.navigate('Clients', { newClient: clients });
+    const client = state;
+    reduxDispatch(addClientAction(client));
+    navigation.navigate('Clients', { newClient: client });
   };
 
   return (
@@ -64,30 +96,30 @@ export default function AddClient({ navigation }) {
       </View>
       <KeyboardAvoidingView style={styles.keyboardAvoiding}>
         <ScrollView style={styles.textEditView}>
-          <BrowsGallery value={clients.photo} onChangeText={(photoClient) => dispatch({type: 'photo', payload: photoClient})} />
+          <BrowsGallery onChangeText={(url) => dispatch(onChangePhoto(url))} />
           <TextEditPerson
             text="ФИО"
             textPlaceholder="Введите фамилию и имя"
-            value={clients.name}
-            onChangeText={(text) => dispatch({type: 'name', payload: text})}
+            value={state.name}
+            onChangeText={(text) => dispatch(onChangeName(text))}
           />
           <EditNumberMask
             text="Введите номар телефона"
             textPlaceholder="+7 (000) 000 00 00"
             keyboard='number-pad'
-            value={clients.number}
-            onChangeText={(num) => dispatch({type: 'number', payload: num})}
+            value={state.number}
+            onChangeText={(num) => dispatch(onChangeNumber(num))}
           />
           <CityPicker
             text="Выберите город"
-            value={clients.city}
-            onChangeText={(text) => dispatch({type: 'city', payload: text})}
+            value={state.city}
+            onChangeText={(text) => dispatch(onChangeCity(text))}
           />
           <TextEditPerson
             text="Био"
             textPlaceholder="Укажите хобби, интересы, образование и стаж работы"
-            value={clients.bio}
-            onChangeText={(text) => dispatch({type: 'bio', payload: text})}
+            value={state.bio}
+            onChangeText={(text) => dispatch(onChangeBio(text))}
             bio
           />
         </ScrollView>

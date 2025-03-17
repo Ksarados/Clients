@@ -17,7 +17,7 @@ export default function BrowsGallery({value, onChangeText}) {
       onChangeText({uri: result.assets[0].uri});
     }
   };
-  console.log('photo ', value)
+
   return (
     <TouchableOpacity style={styles.container} onPress={pickImage} >
       <Text style={styles.titleButton}>Добавить фото</Text>

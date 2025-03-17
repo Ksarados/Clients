@@ -1,29 +1,17 @@
-import * as React from 'react';
+import  React from 'react';
 import { } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react';
 
-import Clients from './scr/screens/clients'
-import ProfileClient from './scr/screens/profile'
-import AddClient from './scr/screens/addclient'
-
-const Stack = createStackNavigator();
-
-function MainStack() {
-  return (
-    <Stack.Navigator
-    screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Clients" component={Clients} />
-      <Stack.Screen name="ProfileClient" component={ProfileClient} />
-      <Stack.Screen name="AddClient" component={AddClient} />
-    </Stack.Navigator>
-  );
-}
+import { store, persistor } from './scr/reducer/store';
+import AppNavigator from './scr/navigation';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <MainStack />
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AppNavigator/>
+      </PersistGate>
+    </Provider>
   );
 }
