@@ -1,8 +1,8 @@
 const CLIENT_ADDED = 'client/CLIENT_ADDED'
 
-const initialValue = [{name: 'Andrey'}];
+const initialValue = [];
 
-const clientReducer = (state = initialValue, action) => {
+const reducer = (state = initialValue, action) => {
 
   switch(action.type){
     case CLIENT_ADDED:
@@ -12,7 +12,7 @@ const clientReducer = (state = initialValue, action) => {
   }
 };
 
-export default clientReducer;
+export default reducer;
 
 export const addClientAction = (client) => {
   return {type: CLIENT_ADDED, payload: client}

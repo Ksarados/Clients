@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './scr/reducer/store';
 import AppNavigator from './scr/navigation';
 
+// splashScreen.preventAutoHideAsync();
 export default function App() {
   return (
     <Provider store={store}>

@@ -8,61 +8,63 @@ import {
   FlatList,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as SplashScreen from "expo-splash-screen";
+import { useSelector, useDispatch } from 'react-redux';
+//import * as SplashScreen from "expo-splash-screen";
 
+import { selectClients } from '../../reducer/selectors'
 import ClientItem from './components/ClientItem';
 import ActiveButton from '../../components/ActiveButton';
 import SearchClient from './components/SearchClient';
 
-const client1 = {
-  id: '1',
-  online: true,
-  photo: require('../../../assets/SergayChernishovMin.png'),
-  name: 'Сергей Чернышев',
-  number: '79999999999',
-  city: 'Казань',
-  bio: 'Я увлекаюсь рыбалкой, сноубордом и люблю играть со своей трехлетней дочкой. \n\n По образованию маркетолог, много лет работал на крупные компании. Теперь решил погрузиться в мир IT.',
-};
+// const client1 = {
+//   id: '1',
+//   online: true,
+//   photo: require('../../../assets/SergayChernishovMin.png'),
+//   name: 'Сергей Чернышев',
+//   number: '79999999999',
+//   city: 'Казань',
+//   bio: 'Я увлекаюсь рыбалкой, сноубордом и люблю играть со своей трехлетней дочкой. \n\n По образованию маркетолог, много лет работал на крупные компании. Теперь решил погрузиться в мир IT.',
+// };
 
-const client2 = {
-  id: '2',
-  online: false,
-  photo: require('../../../assets/IvanIgnatovMin.png'),
-  name: 'Иван Игнатов',
-  number: '79999999999',
-  city: 'Калининград',
-  bio: 'Я увлекаюсь рыбалкой, сноубордом и люблю играть со своей трехлетней дочкой. \n\n По образованию маркетолог, много лет работал на крупные компании. Теперь решил погрузиться в мир IT.',
-};
+// const client2 = {
+//   id: '2',
+//   online: false,
+//   photo: require('../../../assets/IvanIgnatovMin.png'),
+//   name: 'Иван Игнатов',
+//   number: '79999999999',
+//   city: 'Калининград',
+//   bio: 'Я увлекаюсь рыбалкой, сноубордом и люблю играть со своей трехлетней дочкой. \n\n По образованию маркетолог, много лет работал на крупные компании. Теперь решил погрузиться в мир IT.',
+// };
 
-const client3 = {
-  id: '3',
-  online: false,
-  photo: require('../../../assets/OlegIvanovMin.png'),
-  name: 'Олег Иванов',
-  number: '79999999999',
-  city: 'Москва',
-  bio: 'Я увлекаюсь рыбалкой, сноубордом и люблю играть со своей трехлетней дочкой. \n\n По образованию маркетолог, много лет работал на крупные компании. Теперь решил погрузиться в мир IT.',
-};
+// const client3 = {
+//   id: '3',
+//   online: false,
+//   photo: require('../../../assets/OlegIvanovMin.png'),
+//   name: 'Олег Иванов',
+//   number: '79999999999',
+//   city: 'Москва',
+//   bio: 'Я увлекаюсь рыбалкой, сноубордом и люблю играть со своей трехлетней дочкой. \n\n По образованию маркетолог, много лет работал на крупные компании. Теперь решил погрузиться в мир IT.',
+// };
 
-const defultClients = [client1, client2, client3];
+// const defultClients = [client1, client2, client3];
 
-const storeData = async (value) => {
-  try {
-    const jsonValue = JSON.stringify(value)
-    await AsyncStorage.setItem('@clients', jsonValue)
-  } catch (e) {
-// saving error
-  }
-}
+// const storeData = async (value) => {
+//   try {
+//     const jsonValue = JSON.stringify(value)
+//     await AsyncStorage.setItem('@clients', jsonValue)
+//   } catch (e) {
+// // saving error
+//   }
+// }
 
-const getData = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem('@clients')
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-// error reading value
-  }
-}
+// const getData = async () => {
+//   try {
+//     const jsonValue = await AsyncStorage.getItem('@clients')
+//     return jsonValue != null ? JSON.parse(jsonValue) : null;
+//   } catch (e) {
+// // error reading value
+//   }
+// }
 
 // const clearStorage = async () => {
 //   try {
@@ -75,37 +77,38 @@ const getData = async () => {
 
 // clearStorage();
 
-SplashScreen.preventAutoHideAsync(); // Оставляем экран загрузки
+//SplashScreen.preventAutoHideAsync(); // Оставляем экран загрузки
 
 export default function Clients({ navigation, route }) {
-  const [clients, setClients] = useState(defultClients);
+  const clients = useSelector(state => state.clients);
+  // const [clients, setClients] = useState(defultClients);
   const [filterClients, setFilteredClients] = useState(clients);
   const [filter, setFilter] = useState('');
 
-  const loadClients = async () => {
-    const storedClients = await getData();
-    setClients(storedClients ?? []);
-  }
+  // const loadClients = async () => {
+  //   const storedClients = await getData();
+  //   setClients(storedClients ?? []);
+  // }
 
-  useEffect (() => {
-   loadClients()
-  }, []);
+  // useEffect (() => {
+  //  loadClients()
+  // }, []);
 
-  useEffect(() => {
-    if (route.params?.newClient) {
-      const newClients = [...clients, route.params?.newClient];
-      setClients(newClients);
-      storeData(newClients);
-      navigation.setParams({
-        newClients: undefined,
-      });
-    }
-  }, [route.params?.newClient, navigation]);
+  // useEffect(() => {
+  //   if (route.params?.newClient) {
+  //     const newClients = [...clients, route.params?.newClient];
+  //     setClients(newClients);
+  //     storeData(newClients);
+  //     navigation.setParams({
+  //       newClients: undefined,
+  //     });
+  //   }
+  // }, [route.params?.newClient, navigation]);
 
   useEffect(() => {
     const newFilterClients = clients.filter((client) =>
-      client.city.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
-      client.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      client.city?.toLowerCase().includes(filter.toLowerCase()) ||
+      client.name?.toLowerCase().includes(filter.toLowerCase())
     );
     setFilteredClients(newFilterClients);
     console.log('Filter', filterClients);
@@ -119,15 +122,15 @@ export default function Clients({ navigation, route }) {
     return <ClientItem client={item} onPress={onPressClient} />;
   };
  // Задержка загрузки приложения для просмотра экрана загрузки
-  useEffect(() => {
-    const loadApp = async () => {
-      // Симуляция загрузки данных
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      await SplashScreen.hideAsync(); // Скрываем splash screen
-    };
+  // useEffect(() => {
+  //   const loadApp = async () => {
+  //     // Симуляция загрузки данных
+  //     await new Promise((resolve) => setTimeout(resolve, 5000));
+  //     await SplashScreen.hideAsync(); // Скрываем splash screen
+  //   };
 
-    loadApp();
-  }, []);
+  //   loadApp();
+  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>

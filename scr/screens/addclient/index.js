@@ -24,11 +24,11 @@ export const CITY_CHANGED = 'client/city_changed';
 export const BIO_CHANGED = 'client/bio_changed';
 
 const initialValue = {
-  photo: '',
-  name: '',
+  // photo: '',
+  // name: '',
   number: '7',
-  city: '',
-  bio: '',
+  // city: '',
+  // bio: '',
 };
 
 const reducer = (state, action) => {
@@ -79,6 +79,9 @@ export default function AddClient({ navigation }) {
   const reduxDispatch = useDispatch();
 
   const addDatePerson = () => {
+    if (!state.name && !state.city && !state.bio) {
+      return alert( 'Заполните все поля' );
+    }
     const client = state;
     reduxDispatch(addClientAction(client));
     navigation.navigate('Clients', { newClient: client });

@@ -1,0 +1,1 @@
+export const selectClients = state => state.clients.map((client, index) => !client.key? {...client, key: index +1}: client)

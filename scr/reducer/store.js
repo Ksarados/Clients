@@ -13,3 +13,16 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = createStore(persistedReducer);
 export const persistor = persistStore(store)
+
+// const clearPersistedRedux = async () => {
+//   await persistor.purge(); // Очищает локально сохранённые данные Redux
+// };
+
+// clearPersistedRedux()
+
+// const clearAsyncStorage = async () => {
+//   await AsyncStorage.clear();
+//   console.log("AsyncStorage очищен!");
+// };
+
+// clearAsyncStorage()
