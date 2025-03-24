@@ -1,7 +1,7 @@
 const USER_AUTH = 'profile/USER_AUTH';
 
 const initialState = {
-  userName: 'Andrey',
+  // userName: 'Andrey',
 };
 
 export default reducer = (state = initialState, action) => {

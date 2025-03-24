@@ -1,7 +1,7 @@
-import React from 'react';
-import { Text, Image, View, Dimensions, StyleSheet } from 'react-native';
+import React from "react";
+import { Text, Image, View, Dimensions, StyleSheet } from "react-native";
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export default function AvatarUser({ client }) {
   if (!client) return null;
@@ -24,26 +24,26 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   photoView: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   photo: {
     width: SCREEN_WIDTH - 110 * 2,
-    height: 'auto',
+    height: "auto",
     aspectRatio: 1, // высота равнется ширине
     marginTop: 8,
-    borderRadius: 78,
+    borderRadius: 500,
   },
   name: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   textName: {
     marginTop: 16,
     fontSize: 24,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   cityName: {
     fontSize: 13,
-    color: '#A3A3A3',
+    color: "#A3A3A3",
     paddingTop: 4,
   },
 });

@@ -1,19 +1,36 @@
-const CLIENT_ADDED = 'client/CLIENT_ADDED'
+import { createSlice } from "@reduxjs/toolkit";
+// import AddClient from "../screens/addclient";
+
+const CLIENT_ADDED = "client/CLIENT_ADDED";
 
 const initialValue = [];
 
-const reducer = (state = initialValue, action) => {
+const clientSlice = createSlice({
+  name: "clienta",
+  initialState: initialValue,
+  reducers: {
+    addClient: (client, action) => {
+      return [...client, action.payload];
+    },
+  },
+});
 
-  switch(action.type){
-    case CLIENT_ADDED:
-      return [...state, action.payload];
-    default:
-      return state;
-  }
-};
+export const { addClient } = clientSlice.actions;
 
-export default reducer;
+export default clientSlice.reducer;
 
-export const addClientAction = (client) => {
-  return {type: CLIENT_ADDED, payload: client}
-}
+// const reducer = (state = initialValue, action) => {
+
+//   switch(action.type){
+//     case CLIENT_ADDED:
+//       return [...state, action.payload];
+//     default:
+//       return state;
+//   }
+// };
+
+// export default reducer;
+
+// export const addClientAction = (client) => {
+//   return {type: CLIENT_ADDED, payload: client}
+// }

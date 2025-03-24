@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import React, { useState } from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
-export default function BrowsGallery({value, onChangeText}) {
+export default function BrowsGallery({ value, onChangeText }) {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
+      mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
     if (!result.canceled) {
-      onChangeText({uri: result.assets[0].uri});
+      onChangeText({ uri: result.assets[0].uri });
     }
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={pickImage} >
+    <TouchableOpacity style={styles.container} onPress={pickImage}>
       <Text style={styles.titleButton}>Добавить фото</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
     height: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 24,
     borderRadius: 16,
-    backgroundColor: '#FB7360',
+    backgroundColor: "#FB7360",
     padding: 10,
-    },
-    titleButton: {
+  },
+  titleButton: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#FFFFFF',
-    },
+    fontWeight: "600",
+    color: "#FFFFFF",
+  },
   image: {
     width: 200,
     height: 200,

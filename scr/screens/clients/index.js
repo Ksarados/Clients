@@ -80,7 +80,8 @@ import SearchClient from './components/SearchClient';
 //SplashScreen.preventAutoHideAsync(); // Оставляем экран загрузки
 
 export default function Clients({ navigation, route }) {
-  const clients = useSelector(state => state.clients);
+  const clients = useSelector(selectClients);
+  console.log(clients);
   // const [clients, setClients] = useState(defultClients);
   const [filterClients, setFilteredClients] = useState(clients);
   const [filter, setFilter] = useState('');
