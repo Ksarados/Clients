@@ -1,36 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
-// import AddClient from "../screens/addclient";
+import { createSlice, createAction } from "@reduxjs/toolkit";
+// Код для reducer для Redux.
+const CLIENT_ADDED = "client/CLIENT_ADDED"; // Экшен, скорей всего тоже самое, что и action.type(экшенТайпы).
 
-const CLIENT_ADDED = "client/CLIENT_ADDED";
+// Первоначальное значение Redux, которое передается в функцию reducer() ниже.
+const initialState = []; // создается начальное состояние
 
-const initialValue = [];
+export const fetchClient = createAction("client/FETCH_CLIENT");
 
-const clientSlice = createSlice({
-  name: "clienta",
-  initialState: initialValue,
+const clientsSLice = createSlice({
+  name: "clients",
+  initialState,
   reducers: {
-    addClient: (client, action) => {
-      return [...client, action.payload];
+    addClientAction: (state, action) => {
+      return [...state, action.payload];
+    },
+    clientFetched: (_state, action) => {
+      console.log("clientFetched", action);
+      return action.payload;
+    },
+    clientFetchedError: (_state, action) => {
+      console.log("fetch client error", action.payload);
+      return [];
     },
   },
 });
 
-export const { addClient } = clientSlice.actions;
-
-export default clientSlice.reducer;
-
-// const reducer = (state = initialValue, action) => {
-
-//   switch(action.type){
-//     case CLIENT_ADDED:
-//       return [...state, action.payload];
-//     default:
-//       return state;
-//   }
-// };
-
-// export default reducer;
-
-// export const addClientAction = (client) => {
-//   return {type: CLIENT_ADDED, payload: client}
-// }
+export const { addClientAction, clientFetched, clientFetchedError } =
+  clientsSLice.actions;
+export default clientsSLice.reducer;

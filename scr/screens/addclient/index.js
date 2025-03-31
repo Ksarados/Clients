@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,27 +6,27 @@ import {
   SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
-} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
-import { addClientAction } from '../../reducer/clientReducer';
-import NavigationButton from '../../components/NavigationButton';
-import ActiveButton from '../../components/ActiveButton';
-import TextEditPerson from './components/EditPerson';
-import EditNumberMask from './components/EditNumberMask';
-import BrowsGallery from './components/BrowsGallery';
-import CityPicker from './components/CityPicker';
+import { addClientAction, fetchClient } from "../../reducer/clientReducer";
+import NavigationButton from "../../components/NavigationButton";
+import ActiveButton from "../../components/ActiveButton";
+import TextEditPerson from "./components/EditPerson";
+import EditNumberMask from "./components/EditNumberMask";
+import BrowsGallery from "./components/BrowsGallery";
+import CityPicker from "./components/CityPicker";
 
-export const PHOTO_CHANGED = 'client/PHOTO_changed';
-export const NAME_CHANGED = 'client/name_changed';
-export const NUMBER_CHANGED = 'client/number_changed';
-export const CITY_CHANGED = 'client/city_changed';
-export const BIO_CHANGED = 'client/bio_changed';
+export const PHOTO_CHANGED = "client/PHOTO_changed";
+export const NAME_CHANGED = "client/name_changed";
+export const NUMBER_CHANGED = "client/number_changed";
+export const CITY_CHANGED = "client/city_changed";
+export const BIO_CHANGED = "client/bio_changed";
 
 const initialValue = {
   // photo: '',
   // name: '',
-  number: '7',
+  number: "7",
   // city: '',
   // bio: '',
 };
@@ -34,15 +34,15 @@ const initialValue = {
 const reducer = (state, action) => {
   switch (action.type) {
     case PHOTO_CHANGED:
-      return {...state, photo: action.payload };
+      return { ...state, photo: action.payload };
     case NAME_CHANGED:
-      return {...state, name: action.payload };
+      return { ...state, name: action.payload };
     case NUMBER_CHANGED:
-      return {...state, number: action.payload };
+      return { ...state, number: action.payload };
     case CITY_CHANGED:
-      return {...state, city: action.payload };
+      return { ...state, city: action.payload };
     case BIO_CHANGED:
-      return {...state, bio: action.payload };
+      return { ...state, bio: action.payload };
     default:
       return state;
   }
@@ -69,22 +69,25 @@ const onChangeBio = (bio) => {
 };
 
 export default function AddClient({ navigation }) {
-
   const [state, dispatch] = useReducer(reducer, initialValue);
   // console.log('state in component', state);
 
   const clients = useSelector((state) => state);
-  console.log('clients:', clients);
+  console.log("clients:", clients);
 
   const reduxDispatch = useDispatch();
 
+  useEffect(() => {
+    reduxDispatch(fetchClient());
+  }, [reduxDispatch]);
+
   const addDatePerson = () => {
     if (!state.name && !state.city && !state.bio) {
-      return alert( 'Заполните все поля' );
+      return alert("Заполните все поля");
     }
     const client = state;
     reduxDispatch(addClientAction(client));
-    navigation.navigate('Clients', { newClient: client });
+    navigation.navigate("Clients", { newClient: client });
   };
 
   return (
@@ -109,7 +112,7 @@ export default function AddClient({ navigation }) {
           <EditNumberMask
             text="Введите номар телефона"
             textPlaceholder="+7 (000) 000 00 00"
-            keyboard='number-pad'
+            keyboard="number-pad"
             value={state.number}
             onChangeText={(num) => dispatch(onChangeNumber(num))}
           />
@@ -143,12 +146,12 @@ export default function AddClient({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FDFDFD',
+    backgroundColor: "#FDFDFD",
   },
   navigation: {
     height: 42,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   keyboardAvoiding: {
     flex: 1,
